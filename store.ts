@@ -1,4 +1,4 @@
-import {action, observable} from 'mobx';
+import {action, autorun, computed, observable, when} from 'mobx';
 
 export interface IStore {
   counter: number;
@@ -8,6 +8,20 @@ export interface IStore {
 
 class ObservableStore {
   @observable counter = 0;
+
+  @computed get squareCounter() {
+    return this.counter * this.counter;
+  }
+
+  constructor() {
+    autorun(() => console.log('Autorun fired', this.counter));
+    when(
+      // once...
+      () => this.counter < 0,
+      // ... then
+      () => console.log('Counter is negative')
+    );
+  }
 
   @action
   increment() {
