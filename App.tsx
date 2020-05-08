@@ -25,14 +25,18 @@ import {
   DebugInstructions,
   ReloadInstructions
 } from 'react-native/Libraries/NewAppScreen';
-import store, {IStore} from './store';
+import userStore from './stores/user';
 import MainScreen from './views/MainScreen';
 
 declare const global: {HermesInternal: null | {}};
 
+const stores = {
+  userStore
+};
+
 class App extends Component {
   render() {
-    return <MainScreen store={store} />;
+    return <MainScreen {...stores} />;
   }
 }
 
