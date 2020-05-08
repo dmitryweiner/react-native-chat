@@ -12,7 +12,7 @@ type MainScreenProps = {
 
 @inject('userStore')
 @observer
-export default class MainScreen extends Component<MainScreenProps> {
+export default class RegisterScreen extends Component<MainScreenProps> {
   state = {
     nickname: '',
     password: ''
@@ -32,7 +32,6 @@ export default class MainScreen extends Component<MainScreenProps> {
   }
 
   registrationHandler() {
-    console.log(this.state.nickname && this.state.password);
     if (this.state.nickname && this.state.password) {
       this.props.userStore.register({...this.state});
     }

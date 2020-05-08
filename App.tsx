@@ -26,7 +26,7 @@ import {
   ReloadInstructions
 } from 'react-native/Libraries/NewAppScreen';
 import userStore from './stores/user';
-import MainScreen from './views/MainScreen';
+import RegisterScreen from './views/MainScreen';
 import {ApplicationProvider} from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
 
@@ -40,7 +40,7 @@ class App extends Component {
   render() {
     return (
       <ApplicationProvider {...eva} theme={eva.light}>
-        <MainScreen {...stores} />
+        <RegisterScreen {...stores} />
       </ApplicationProvider>
     );
   }

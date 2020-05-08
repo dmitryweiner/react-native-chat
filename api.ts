@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {IUserRegister} from './interfaces/user';
+import {IUserLogin, IUserRegister} from './interfaces/user';
 
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:3000'
@@ -8,6 +8,9 @@ const axiosInstance = axios.create({
 const api = {
   register(params: IUserRegister) {
     return axiosInstance.post('/user/register', params);
+  },
+  login(params: IUserLogin) {
+    return axiosInstance.post('/user/login', params);
   }
 };
 
