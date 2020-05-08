@@ -48,7 +48,6 @@ class UserStore {
         }
         this.isRegistrationInProgress = false;
         this.isRegistrationError = true;
-        console.log(errorMessage);
         this.registrationErrorMessage = errorMessage;
       });
   }

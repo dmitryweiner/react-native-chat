@@ -1,6 +1,7 @@
 import {inject, observer} from 'mobx-react';
 import React, {Component} from 'react';
-import {View, Text, Button, StyleSheet, TextInput} from 'react-native';
+import {View, StyleSheet} from 'react-native';
+import {Input, Text, Button} from '@ui-kitten/components';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {IUserStore} from '../stores/user';
 import {reaction} from 'mobx';
@@ -31,6 +32,7 @@ export default class MainScreen extends Component<MainScreenProps> {
   }
 
   registrationHandler() {
+    console.log(this.state.nickname && this.state.password);
     if (this.state.nickname && this.state.password) {
       this.props.userStore.register({...this.state});
     }
@@ -40,7 +42,7 @@ export default class MainScreen extends Component<MainScreenProps> {
     return (
       <View>
         <View style={styles.centeredView}>
-          <Text style={styles.centeredText}>Registration</Text>
+          <Text category="h1">Registration</Text>
         </View>
         <View>
           {this.props.userStore.isRegistrationInProgress && (
@@ -55,22 +57,25 @@ export default class MainScreen extends Component<MainScreenProps> {
               {this.props.userStore.registrationErrorMessage}
             </Text>
           )}
-          <TextInput
+          <Input
+            label="Nickname"
             placeholder="Enter nickname"
             value={this.state.nickname}
             onChangeText={(nickname: string) => this.setState({nickname})}
           />
-          <TextInput
-            placeholder="Enter password"
+          <Input
             value={this.state.password}
+            label="Password"
+            placeholder="Enter your password"
+            caption="Should contain at least 8 symbols"
+            secureTextEntry={true}
             onChangeText={(password: string) => this.setState({password})}
           />
         </View>
         <View>
-          <Button
-            title="Register"
-            onPress={() => this.registrationHandler.bind(this)}
-          />
+          <Button onPress={this.registrationHandler.bind(this)}>
+            Register
+          </Button>
         </View>
       </View>
     );

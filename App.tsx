@@ -27,6 +27,8 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import userStore from './stores/user';
 import MainScreen from './views/MainScreen';
+import {ApplicationProvider} from '@ui-kitten/components';
+import * as eva from '@eva-design/eva';
 
 declare const global: {HermesInternal: null | {}};
 
@@ -36,7 +38,11 @@ const stores = {
 
 class App extends Component {
   render() {
-    return <MainScreen {...stores} />;
+    return (
+      <ApplicationProvider {...eva} theme={eva.light}>
+        <MainScreen {...stores} />
+      </ApplicationProvider>
+    );
   }
 }
 
