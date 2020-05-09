@@ -4,15 +4,17 @@ import {View, StyleSheet} from 'react-native';
 import {Input, Text, Button} from '@ui-kitten/components';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {IUserStore} from '../stores/user';
+import {withNavigation} from 'react-navigation';
 import {reaction} from 'mobx';
 
 type MainScreenProps = {
   userStore: IUserStore;
+  navigation: any;
 };
 
 @inject('userStore')
 @observer
-export default class RegisterScreen extends Component<MainScreenProps> {
+class RegisterScreen extends Component<MainScreenProps> {
   state = {
     nickname: '',
     password: ''
@@ -23,11 +25,18 @@ export default class RegisterScreen extends Component<MainScreenProps> {
 
     reaction(
       () => this.props.userStore.isRegistrationSuccess,
-      () =>
-        this.setState({
-          nickname: '',
-          password: ''
-        })
+      (isSuccess: boolean) => {
+        if (isSuccess) {
+          this.setState({
+            nickname: '',
+            password: ''
+          });
+          this.props.navigation.reset({
+            index: 0,
+            routes: [{name: 'Profile'}]
+          });
+        }
+      }
     );
   }
 
@@ -80,6 +89,9 @@ export default class RegisterScreen extends Component<MainScreenProps> {
     );
   }
 }
+
+// @ts-ignore
+export default withNavigation(RegisterScreen);
 
 const styles = StyleSheet.create({
   centeredView: {

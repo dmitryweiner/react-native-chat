@@ -3,7 +3,7 @@ import {IUserRegister, IUser} from '../interfaces/user';
 import api from '../api';
 
 export interface IUserStore {
-  user: IUser;
+  user: IUser | undefined;
   isRegistrationInProgress: boolean;
   isRegistrationError: boolean;
   isRegistrationSuccess: boolean;

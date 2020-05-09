@@ -26,9 +26,13 @@ import {
   ReloadInstructions
 } from 'react-native/Libraries/NewAppScreen';
 import userStore from './stores/user';
-import RegisterScreen from './views/MainScreen';
+import RegisterScreen from './views/RegisterScreen';
 import {ApplicationProvider} from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import LoginScreen from './views/LoginScreen';
+import ProfileScreen from './views/ProfileScreen';
 
 declare const global: {HermesInternal: null | {}};
 
@@ -36,11 +40,43 @@ const stores = {
   userStore
 };
 
+const Stack = createStackNavigator();
+
 class App extends Component {
   render() {
     return (
       <ApplicationProvider {...eva} theme={eva.light}>
-        <RegisterScreen {...stores} />
+        <NavigationContainer>
+          <Stack.Navigator headerMode="none">
+            <Stack.Screen name="Register">
+              {({navigation}) => {
+                const props = {
+                  userStore: stores.userStore,
+                  navigation
+                };
+                return <RegisterScreen {...props} />;
+              }}
+            </Stack.Screen>
+            <Stack.Screen name="Login">
+              {({navigation}) => {
+                const props = {
+                  userStore: stores.userStore,
+                  navigation
+                };
+                return <LoginScreen {...props} />;
+              }}
+            </Stack.Screen>
+            <Stack.Screen name="Profile">
+              {({navigation}) => {
+                const props = {
+                  userStore: stores.userStore,
+                  navigation
+                };
+                return <ProfileScreen {...props} />;
+              }}
+            </Stack.Screen>
+          </Stack.Navigator>
+        </NavigationContainer>
       </ApplicationProvider>
     );
   }

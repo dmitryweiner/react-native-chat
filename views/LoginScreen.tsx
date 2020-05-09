@@ -8,6 +8,7 @@ import {reaction} from 'mobx';
 
 type LoginScreenProps = {
   userStore: IUserStore;
+  navigation: any;
 };
 
 @inject('userStore')
@@ -23,11 +24,16 @@ export default class LoginScreen extends Component<LoginScreenProps> {
 
     reaction(
       () => this.props.userStore.isLoginSuccess,
-      () =>
+      () => {
         this.setState({
           nickname: '',
           password: ''
-        })
+        });
+        this.props.navigation.reset({
+          index: 0,
+          routes: [{name: 'Profile'}]
+        });
+      }
     );
   }
 

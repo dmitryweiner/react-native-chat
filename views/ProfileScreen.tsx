@@ -8,24 +8,33 @@ import {IUser} from '../interfaces/user';
 
 type ProfileScreenProps = {
   userStore: IUserStore;
+  navigation: any;
 };
 
 @inject('userStore')
 @observer
 export default class ProfileScreen extends Component<ProfileScreenProps> {
-  render() {
-    const {id, nickname, lastActivity} = this.props.userStore.user;
+  renderUserDetails() {
+    if (!this.props.userStore.user) {
+      return null;
+    }
+    const {id, nickname, lastActivity} = this.props.userStore.user as any;
+    return (
+      <View>
+        <Text>ID: {id}</Text>
+        <Text>Nickname: {nickname}</Text>
+        <Text>Last activity: {lastActivity.toString()}</Text>
+      </View>
+    );
+  }
 
+  render() {
     return (
       <View>
         <View style={styles.centeredView}>
           <Text category="h1">Profile</Text>
         </View>
-        <View>
-          <Text>ID: {id}</Text>
-          <Text>Nickname: {nickname}</Text>
-          <Text>Last activity: {lastActivity.toString()}</Text>
-        </View>
+        {this.renderUserDetails()}
       </View>
     );
   }
