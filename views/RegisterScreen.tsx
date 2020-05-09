@@ -4,7 +4,6 @@ import {View, StyleSheet} from 'react-native';
 import {Input, Text, Button} from '@ui-kitten/components';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {IUserStore} from '../stores/user';
-import {withNavigation} from 'react-navigation';
 import {reaction} from 'mobx';
 
 type MainScreenProps = {
@@ -14,7 +13,7 @@ type MainScreenProps = {
 
 @inject('userStore')
 @observer
-class RegisterScreen extends Component<MainScreenProps> {
+export default class RegisterScreen extends Component<MainScreenProps> {
   state = {
     nickname: '',
     password: ''
@@ -89,9 +88,6 @@ class RegisterScreen extends Component<MainScreenProps> {
     );
   }
 }
-
-// @ts-ignore
-export default withNavigation(RegisterScreen);
 
 const styles = StyleSheet.create({
   centeredView: {
