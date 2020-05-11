@@ -4,7 +4,6 @@ import {View, StyleSheet} from 'react-native';
 import {Text, Button} from '@ui-kitten/components';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {IUserStore} from '../stores/user';
-import {IUser} from '../interfaces/user';
 
 type ProfileScreenProps = {
   userStore: IUserStore;
@@ -14,13 +13,21 @@ type ProfileScreenProps = {
 @inject('userStore')
 @observer
 export default class ProfileScreen extends Component<ProfileScreenProps> {
+  handleLogout() {
+    this.props.userStore.logout();
+    this.props.navigation.reset({
+      index: 0,
+      routes: [{name: 'Login'}]
+    });
+  }
+
   renderUserDetails() {
     if (!this.props.userStore.user) {
       return null;
     }
     const {id, nickname, lastActivity} = this.props.userStore.user as any;
     return (
-      <View>
+      <View style={styles.viewWithMargin}>
         <Text>ID: {id}</Text>
         <Text>Nickname: {nickname}</Text>
         <Text>Last activity: {lastActivity.toString()}</Text>
@@ -35,6 +42,9 @@ export default class ProfileScreen extends Component<ProfileScreenProps> {
           <Text category="h1">Profile</Text>
         </View>
         {this.renderUserDetails()}
+        <View style={styles.viewWithMargin}>
+          <Button onPress={this.handleLogout.bind(this)}>Logout</Button>
+        </View>
       </View>
     );
   }
@@ -43,12 +53,16 @@ export default class ProfileScreen extends Component<ProfileScreenProps> {
 const styles = StyleSheet.create({
   centeredView: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    margin: 20
   },
   centeredText: {
     textAlign: 'center',
     fontSize: 24,
     fontWeight: '600',
     color: Colors.green
+  },
+  viewWithMargin: {
+    margin: 10
   }
 });

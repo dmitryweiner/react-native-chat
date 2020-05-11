@@ -15,6 +15,8 @@ export interface IUserStore {
   isLoginSuccess: boolean;
   loginErrorMessage: string;
   login: Function;
+  logout: Function;
+  checkIfLogged: Function;
 }
 
 class UserStore {
@@ -45,16 +47,9 @@ class UserStore {
         this.user = user;
       })
       .catch((error: any) => {
-        let errorMessage: string = '';
-        if (error.response) {
-          // Request made and server responded
-          errorMessage = error.response.data.error;
-        } else {
-          errorMessage = `Something wrong happened! ${error.message}`;
-        }
         this.isRegistrationInProgress = false;
         this.isRegistrationError = true;
-        this.registrationErrorMessage = errorMessage;
+        this.registrationErrorMessage = getErrorMessage(error);
       });
   }
 
@@ -82,21 +77,33 @@ class UserStore {
         this.user = user;
       })
       .catch((error: any) => {
-        let errorMessage: string = '';
-        if (error.response) {
-          // Request made and server responded
-          errorMessage = error.response.data.error;
-        } else {
-          errorMessage = `Something wrong happened! ${error.message}`;
-        }
         this.isLoginInProgress = false;
         this.isLoginError = true;
-        this.loginErrorMessage = errorMessage;
+        this.loginErrorMessage = getErrorMessage(error);
       });
+  }
+
+  @action
+  logout() {
+    this.user = undefined;
+  }
+
+  @action
+  checkIfLogged() {
+    return !!this.user;
   }
 }
 
-function defaultErrorHandler() {}
+function getErrorMessage(error: any) {
+  let errorMessage: string = '';
+  if (error.response) {
+    // Request made and server responded
+    errorMessage = error.response.data.error;
+  } else {
+    errorMessage = `Something wrong happened! ${error.message}`;
+  }
+  return errorMessage;
+}
 
 const userStore = new UserStore();
 export default userStore;

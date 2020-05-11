@@ -19,10 +19,10 @@ export default class LoginScreen extends Component<LoginScreenProps> {
     password: ''
   };
 
-  constructor(props: LoginScreenProps) {
-    super(props);
+  reactionDisposer: Function = () => {};
 
-    reaction(
+  componentDidMount(): void {
+    this.reactionDisposer = reaction(
       () => this.props.userStore.isLoginSuccess,
       () => {
         this.setState({
@@ -37,6 +37,10 @@ export default class LoginScreen extends Component<LoginScreenProps> {
     );
   }
 
+  componentWillUnmount(): void {
+    this.reactionDisposer();
+  }
+
   loginHandler() {
     if (this.state.nickname && this.state.password) {
       this.props.userStore.login({...this.state});
@@ -49,7 +53,7 @@ export default class LoginScreen extends Component<LoginScreenProps> {
         <View style={styles.centeredView}>
           <Text category="h1">Login</Text>
         </View>
-        <View>
+        <View style={styles.viewWithMargin}>
           {this.props.userStore.isLoginInProgress && <Text>Loading</Text>}
           {this.props.userStore.isLoginSuccess && (
             <Text>Login successful!</Text>
@@ -72,8 +76,20 @@ export default class LoginScreen extends Component<LoginScreenProps> {
             onChangeText={(password: string) => this.setState({password})}
           />
         </View>
-        <View>
+        <View style={styles.viewWithMargin}>
           <Button onPress={this.loginHandler.bind(this)}>Login</Button>
+        </View>
+        <View style={styles.viewWithMargin}>
+          <Text>Don't have an account?</Text>
+          <Button
+            onPress={() =>
+              this.props.navigation.reset({
+                index: 0,
+                routes: [{name: 'Register'}]
+              })
+            }>
+            Register
+          </Button>
         </View>
       </View>
     );
@@ -83,12 +99,16 @@ export default class LoginScreen extends Component<LoginScreenProps> {
 const styles = StyleSheet.create({
   centeredView: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    margin: 20
   },
   centeredText: {
     textAlign: 'center',
     fontSize: 24,
     fontWeight: '600',
     color: Colors.green
+  },
+  viewWithMargin: {
+    margin: 10
   }
 });

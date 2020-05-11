@@ -51,7 +51,7 @@ export default class RegisterScreen extends Component<MainScreenProps> {
         <View style={styles.centeredView}>
           <Text category="h1">Registration</Text>
         </View>
-        <View>
+        <View style={styles.viewWithMargin}>
           {this.props.userStore.isRegistrationInProgress && (
             <Text>Loading</Text>
           )}
@@ -79,9 +79,21 @@ export default class RegisterScreen extends Component<MainScreenProps> {
             onChangeText={(password: string) => this.setState({password})}
           />
         </View>
-        <View>
+        <View style={styles.viewWithMargin}>
           <Button onPress={this.registrationHandler.bind(this)}>
             Register
+          </Button>
+        </View>
+        <View style={styles.viewWithMargin}>
+          <Text>Already have an account?</Text>
+          <Button
+            onPress={() =>
+              this.props.navigation.reset({
+                index: 0,
+                routes: [{name: 'Login'}]
+              })
+            }>
+            Login
           </Button>
         </View>
       </View>
@@ -92,12 +104,16 @@ export default class RegisterScreen extends Component<MainScreenProps> {
 const styles = StyleSheet.create({
   centeredView: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    margin: 20
   },
   centeredText: {
     textAlign: 'center',
     fontSize: 24,
     fontWeight: '600',
     color: Colors.green
+  },
+  viewWithMargin: {
+    margin: 10
   }
 });
