@@ -25,14 +25,16 @@ import {
   DebugInstructions,
   ReloadInstructions
 } from 'react-native/Libraries/NewAppScreen';
-import userStore from './stores/user';
+import userStore, {IUserStore} from './stores/user';
 import RegisterScreen from './views/RegisterScreen';
 import {ApplicationProvider} from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import LoginScreen from './views/LoginScreen';
 import ProfileScreen from './views/ProfileScreen';
+import {reaction} from 'mobx';
+import {inject, observer} from 'mobx-react';
 
 declare const global: {HermesInternal: null | {}};
 
@@ -44,9 +46,49 @@ const Stack = createStackNavigator();
 
 class App extends Component {
   render() {
+    return <MainContainer {...stores} />;
+  }
+}
+
+type MainContainerProps = {
+  userStore: IUserStore;
+};
+
+@inject('userStore')
+@observer
+class MainContainer extends Component<MainContainerProps> {
+  reactionDisposer: Function = () => {};
+  state = {
+    initialNavigatorState: {
+      index: 0,
+      routes: [{name: 'Login'}]
+    }
+  };
+
+  componentDidMount() {
+    this.reactionDisposer = reaction(
+      () => !!this.props.userStore.user,
+      (isLogged: boolean) => {
+        if (isLogged) {
+          this.setState({
+            initialNavigatorState: {
+              index: 0,
+              routes: [{name: 'Profile'}]
+            }
+          });
+        }
+      }
+    );
+  }
+
+  componentWillUnmount(): void {
+    this.reactionDisposer();
+  }
+
+  render() {
     return (
       <ApplicationProvider {...eva} theme={eva.light}>
-        <NavigationContainer>
+        <NavigationContainer initialState={this.state.initialNavigatorState}>
           <Stack.Navigator headerMode="none">
             <Stack.Screen name="Register">
               {({navigation}) => {

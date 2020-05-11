@@ -1,6 +1,9 @@
 import {action, observable} from 'mobx';
 import {IUserRegister, IUser} from '../interfaces/user';
 import api from '../api';
+import AsyncStorage from '@react-native-community/async-storage';
+
+const USER_STORAGE_KEY = 'user';
 
 export interface IUserStore {
   user: IUser | undefined;
@@ -31,6 +34,11 @@ class UserStore {
   isRegistrationSuccess = false;
   @observable
   registrationErrorMessage = '';
+
+  constructor() {
+    this.loadUser();
+  }
+
   @action
   register(params: IUserRegister) {
     this.isRegistrationInProgress = true;
@@ -86,12 +94,40 @@ class UserStore {
   @action
   logout() {
     this.user = undefined;
+    this.removeUser();
   }
 
   @action
   checkIfLogged() {
     return !!this.user;
   }
+
+  loadUser = async () => {
+    try {
+      const value = await AsyncStorage.getItem(USER_STORAGE_KEY);
+      if (value !== null) {
+        this.user = JSON.parse(value);
+      }
+    } catch (e) {
+      console.error('Error loading user', e);
+    }
+  };
+
+  saveUser = async (user: IUser) => {
+    try {
+      await AsyncStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
+    } catch (e) {
+      console.error('Error saving user', e);
+    }
+  };
+
+  removeUser = async () => {
+    try {
+      await AsyncStorage.removeItem(USER_STORAGE_KEY);
+    } catch (e) {
+      console.error('error reading value');
+    }
+  };
 }
 
 function getErrorMessage(error: any) {

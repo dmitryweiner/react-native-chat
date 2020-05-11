@@ -19,10 +19,10 @@ export default class RegisterScreen extends Component<MainScreenProps> {
     password: ''
   };
 
-  constructor(props: MainScreenProps) {
-    super(props);
+  reactionDisposer: Function = () => {};
 
-    reaction(
+  componentDidMount() {
+    this.reactionDisposer = reaction(
       () => this.props.userStore.isRegistrationSuccess,
       (isSuccess: boolean) => {
         if (isSuccess) {
@@ -37,6 +37,10 @@ export default class RegisterScreen extends Component<MainScreenProps> {
         }
       }
     );
+  }
+
+  componentWillUnmount(): void {
+    this.reactionDisposer();
   }
 
   registrationHandler() {
