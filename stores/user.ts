@@ -53,6 +53,7 @@ class UserStore {
         this.isRegistrationSuccess = true;
         this.isRegistrationInProgress = false;
         this.user = user;
+        this.saveUser(user);
       })
       .catch((error: any) => {
         this.isRegistrationInProgress = false;
@@ -83,6 +84,7 @@ class UserStore {
         this.isLoginSuccess = true;
         this.isLoginInProgress = false;
         this.user = user;
+        this.saveUser(user);
       })
       .catch((error: any) => {
         this.isLoginInProgress = false;

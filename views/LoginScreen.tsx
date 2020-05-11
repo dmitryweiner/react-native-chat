@@ -29,10 +29,10 @@ export default class LoginScreen extends Component<LoginScreenProps> {
           nickname: '',
           password: ''
         });
-        this.props.navigation.reset({
+/*        this.props.navigation.reset({
           index: 0,
           routes: [{name: 'Profile'}]
-        });
+        });*/
       }
     );
   }

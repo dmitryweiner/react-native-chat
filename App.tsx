@@ -35,6 +35,8 @@ import LoginScreen from './views/LoginScreen';
 import ProfileScreen from './views/ProfileScreen';
 import {reaction} from 'mobx';
 import {inject, observer} from 'mobx-react';
+import {NavigationContainerComponent} from 'react-navigation';
+import {NavigationContainerRef} from '@react-navigation/core';
 
 declare const global: {HermesInternal: null | {}};
 
@@ -54,10 +56,17 @@ type MainContainerProps = {
   userStore: IUserStore;
 };
 
+let instanceRef: NavigationContainerRef;
+
+export function setNavigatorRef(instance: NavigationContainerRef) {
+  instanceRef = instance;
+}
+
 @inject('userStore')
 @observer
 class MainContainer extends Component<MainContainerProps> {
   reactionDisposer: Function = () => {};
+  navigatorRef: any = undefined;
   state = {
     initialNavigatorState: {
       index: 0,
@@ -70,11 +79,9 @@ class MainContainer extends Component<MainContainerProps> {
       () => !!this.props.userStore.user,
       (isLogged: boolean) => {
         if (isLogged) {
-          this.setState({
-            initialNavigatorState: {
-              index: 0,
-              routes: [{name: 'Profile'}]
-            }
+          instanceRef.reset({
+            index: 0,
+            routes: [{name: 'Profile'}]
           });
         }
       }
@@ -88,7 +95,7 @@ class MainContainer extends Component<MainContainerProps> {
   render() {
     return (
       <ApplicationProvider {...eva} theme={eva.light}>
-        <NavigationContainer initialState={this.state.initialNavigatorState}>
+        <NavigationContainer ref={setNavigatorRef}>
           <Stack.Navigator headerMode="none">
             <Stack.Screen name="Register">
               {({navigation}) => {

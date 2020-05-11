@@ -30,10 +30,10 @@ export default class RegisterScreen extends Component<MainScreenProps> {
             nickname: '',
             password: ''
           });
-          this.props.navigation.reset({
+/*          this.props.navigation.reset({
             index: 0,
             routes: [{name: 'Profile'}]
-          });
+          });*/
         }
       }
     );
