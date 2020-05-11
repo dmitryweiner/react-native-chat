@@ -35,7 +35,6 @@ import LoginScreen from './views/LoginScreen';
 import ProfileScreen from './views/ProfileScreen';
 import {reaction} from 'mobx';
 import {inject, observer} from 'mobx-react';
-import {NavigationContainerComponent} from 'react-navigation';
 import {NavigationContainerRef} from '@react-navigation/core';
 
 declare const global: {HermesInternal: null | {}};
@@ -66,7 +65,6 @@ export function setNavigatorRef(instance: NavigationContainerRef) {
 @observer
 class MainContainer extends Component<MainContainerProps> {
   reactionDisposer: Function = () => {};
-  navigatorRef: any = undefined;
   state = {
     initialNavigatorState: {
       index: 0,
@@ -83,6 +81,11 @@ class MainContainer extends Component<MainContainerProps> {
             index: 0,
             routes: [{name: 'Profile'}]
           });
+        } else {
+          instanceRef.reset({
+            index: 0,
+            routes: [{name: 'Login'}]
+          });
         }
       }
     );
@@ -96,7 +99,7 @@ class MainContainer extends Component<MainContainerProps> {
     return (
       <ApplicationProvider {...eva} theme={eva.light}>
         <NavigationContainer ref={setNavigatorRef}>
-          <Stack.Navigator headerMode="none">
+          <Stack.Navigator headerMode="none" initialRouteName="Login">
             <Stack.Screen name="Register">
               {({navigation}) => {
                 const props = {

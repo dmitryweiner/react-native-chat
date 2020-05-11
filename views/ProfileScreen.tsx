@@ -15,10 +15,6 @@ type ProfileScreenProps = {
 export default class ProfileScreen extends Component<ProfileScreenProps> {
   handleLogout() {
     this.props.userStore.logout();
-    this.props.navigation.reset({
-      index: 0,
-      routes: [{name: 'Login'}]
-    });
   }
 
   renderUserDetails() {
