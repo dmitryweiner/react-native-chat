@@ -8,6 +8,11 @@ export interface IUserLogin {
   password: string;
 }
 
+export interface IAuthParams {
+  userId: string;
+  token: string;
+}
+
 export interface IUser {
   id: string;
   nickname: string;

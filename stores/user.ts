@@ -1,11 +1,13 @@
 import {action, observable} from 'mobx';
-import {IUserRegister, IUser} from '../interfaces/user';
-import api from '../api';
+import {IUserRegister, IUser, IAuthParams} from '../interfaces/user';
+import api, {getErrorMessage} from '../api';
 import AsyncStorage from '@react-native-community/async-storage';
+import {IRootStore} from './root';
 
 const USER_STORAGE_KEY = 'user';
 
 export interface IUserStore {
+  rootStore: IRootStore;
   user: IUser | undefined;
   isRegistrationInProgress: boolean;
   isRegistrationError: boolean;
@@ -20,9 +22,10 @@ export interface IUserStore {
   login: Function;
   logout: Function;
   checkIfLogged: Function;
+  getAuthParams: Function;
 }
 
-class UserStore {
+export class UserStore {
   @observable
   user: IUser | undefined;
 
@@ -35,7 +38,9 @@ class UserStore {
   @observable
   registrationErrorMessage = '';
 
-  constructor() {
+  rootStore: IRootStore;
+  constructor(rootStore: IRootStore) {
+    this.rootStore = rootStore;
     this.loadUser();
   }
 
@@ -130,18 +135,14 @@ class UserStore {
       console.error('error reading value');
     }
   };
-}
 
-function getErrorMessage(error: any) {
-  let errorMessage: string = '';
-  if (error.response) {
-    // Request made and server responded
-    errorMessage = error.response.data.error;
-  } else {
-    errorMessage = `Something wrong happened! ${error.message}`;
+  getAuthParams(): IAuthParams {
+    if (this.user) {
+      return {
+        token: this.user.token,
+        userId: this.user.id
+      };
+    }
+    throw new Error('User not authorized');
   }
-  return errorMessage;
 }
-
-const userStore = new UserStore();
-export default userStore;

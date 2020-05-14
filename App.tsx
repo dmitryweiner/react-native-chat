@@ -25,9 +25,9 @@ import {
   DebugInstructions,
   ReloadInstructions
 } from 'react-native/Libraries/NewAppScreen';
-import userStore, {IUserStore} from './stores/user';
+import rootStore from './stores/root';
 import RegisterScreen from './views/RegisterScreen';
-import {ApplicationProvider} from '@ui-kitten/components';
+import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -36,11 +36,13 @@ import ProfileScreen from './views/ProfileScreen';
 import {reaction} from 'mobx';
 import {inject, observer} from 'mobx-react';
 import {NavigationContainerRef} from '@react-navigation/core';
+import MyChatsScreen from './views/MyChatsScreen';
+import {EvaIconsPack} from '@ui-kitten/eva-icons';
 
 declare const global: {HermesInternal: null | {}};
 
 const stores = {
-  userStore
+  userStore: rootStore.userStore
 };
 
 const Stack = createStackNavigator();
@@ -97,39 +99,51 @@ class MainContainer extends Component<MainContainerProps> {
 
   render() {
     return (
-      <ApplicationProvider {...eva} theme={eva.light}>
-        <NavigationContainer ref={setNavigatorRef}>
-          <Stack.Navigator headerMode="none" initialRouteName="Login">
-            <Stack.Screen name="Register">
-              {({navigation}) => {
-                const props = {
-                  userStore: stores.userStore,
-                  navigation
-                };
-                return <RegisterScreen {...props} />;
-              }}
-            </Stack.Screen>
-            <Stack.Screen name="Login">
-              {({navigation}) => {
-                const props = {
-                  userStore: stores.userStore,
-                  navigation
-                };
-                return <LoginScreen {...props} />;
-              }}
-            </Stack.Screen>
-            <Stack.Screen name="Profile">
-              {({navigation}) => {
-                const props = {
-                  userStore: stores.userStore,
-                  navigation
-                };
-                return <ProfileScreen {...props} />;
-              }}
-            </Stack.Screen>
-          </Stack.Navigator>
-        </NavigationContainer>
-      </ApplicationProvider>
+      <>
+        <IconRegistry icons={EvaIconsPack} />
+        <ApplicationProvider {...eva} theme={eva.light}>
+          <NavigationContainer ref={setNavigatorRef}>
+            <Stack.Navigator headerMode="none" initialRouteName="Login">
+              <Stack.Screen name="Register">
+                {({navigation}) => {
+                  const props = {
+                    userStore: stores.userStore,
+                    navigation
+                  };
+                  return <RegisterScreen {...props} />;
+                }}
+              </Stack.Screen>
+              <Stack.Screen name="Login">
+                {({navigation}) => {
+                  const props = {
+                    userStore: stores.userStore,
+                    navigation
+                  };
+                  return <LoginScreen {...props} />;
+                }}
+              </Stack.Screen>
+              <Stack.Screen name="Profile">
+                {({navigation}) => {
+                  const props = {
+                    userStore: stores.userStore,
+                    navigation
+                  };
+                  return <ProfileScreen {...props} />;
+                }}
+              </Stack.Screen>
+              <Stack.Screen name="MyChats">
+                {({navigation}) => {
+                  const props = {
+                    userStore: stores.userStore,
+                    navigation
+                  };
+                  return <MyChatsScreen {...props} />;
+                }}
+              </Stack.Screen>
+            </Stack.Navigator>
+          </NavigationContainer>
+        </ApplicationProvider>
+      </>
     );
   }
 }
