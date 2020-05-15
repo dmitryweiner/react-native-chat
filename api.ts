@@ -1,10 +1,12 @@
 import axios from 'axios';
+import {IAuthParams, IUserLogin, IUserRegister} from './interfaces/user';
 import {
-  IAuthParams,
-  IUserLogin,
-  IUserRegister
-} from './interfaces/user';
-import {ICreateChatParams, ISearchParams, IViewChatParams} from './interfaces/chat';
+  ICreateChatParams,
+  IJoinChatParams,
+  ISearchParams,
+  IViewChatParams
+} from './interfaces/chat';
+import {IApiState} from './interfaces/api';
 
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:3000'
@@ -26,7 +28,13 @@ const api = {
   viewChat(params: IViewChatParams) {
     return axiosInstance.post(`/chat/${params.chatId}`, params);
   },
+  joinChat(params: IJoinChatParams) {
+    return axiosInstance.put(`/chat/${params.chatId}`, params);
+  },
   searchChats(params: ISearchParams) {
+    return axiosInstance.post('/chat/search', params);
+  },
+  sendMessage(params: ISendMessageParams) {
     return axiosInstance.post('/chat/search', params);
   }
 };
@@ -40,6 +48,14 @@ export function getErrorMessage(error: any) {
     errorMessage = `Something wrong happened! ${error.message}`;
   }
   return errorMessage;
+}
+
+export function getDefaultApiState(): IApiState {
+  return {
+    isLoading: true,
+    isError: false,
+    errorMessage: ''
+  };
 }
 
 export default api;

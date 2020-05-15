@@ -32,7 +32,7 @@ export default class MyChatsScreen extends Component<MyChatsProps> {
       </ScreenWithNavigation>
     );
   }
-};
+}
 
 const styles = StyleSheet.create({
   container: {

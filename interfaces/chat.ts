@@ -12,6 +12,10 @@ export interface IViewChatParams extends IAuthParams {
   chatId: string;
 }
 
+export interface IJoinChatParams extends IAuthParams {
+  chatId: string;
+}
+
 export interface IChat {
   id: string;
   title: string;

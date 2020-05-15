@@ -25,7 +25,7 @@ import {
   DebugInstructions,
   ReloadInstructions
 } from 'react-native/Libraries/NewAppScreen';
-import rootStore from './stores/root';
+import stores from './stores/root';
 import RegisterScreen from './views/RegisterScreen';
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
@@ -38,12 +38,9 @@ import {inject, observer} from 'mobx-react';
 import {NavigationContainerRef} from '@react-navigation/core';
 import MyChatsScreen from './views/MyChatsScreen';
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
+import {IUserStore} from './stores/user';
 
 declare const global: {HermesInternal: null | {}};
-
-const stores = {
-  userStore: rootStore.userStore
-};
 
 const Stack = createStackNavigator();
 

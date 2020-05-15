@@ -53,7 +53,9 @@ const ScreenWithNavigation: React.FC<ScreenWithNavigationProps> = (
     </React.Fragment>
   );
 
-  const renderBackAction = () => <TopNavigationAction icon={BackIcon} onPress={props.backHandler} />;
+  const renderBackAction = () => (
+    <TopNavigationAction icon={BackIcon} onPress={props.backHandler} />
+  );
 
   return (
     <Layout style={styles.container} level="1">
