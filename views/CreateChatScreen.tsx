@@ -80,7 +80,9 @@ export default class CreateChatScreen extends Component<
           <>
             {this.props.chatStore.createChatApiState?.isError && (
               <View style={styles.viewWithMargin}>
-                <Text>{this.props.chatStore.createChatApiState.errorMessage}</Text>
+                <Text>
+                  {this.props.chatStore.createChatApiState.errorMessage}
+                </Text>
               </View>
             )}
             <View style={styles.viewWithMargin}>
@@ -91,9 +93,7 @@ export default class CreateChatScreen extends Component<
               />
             </View>
             <View>
-              <Button onPress={this.handleSaveChat}>
-                Save
-              </Button>
+              <Button onPress={this.handleSaveChat}>Save</Button>
               <Button onPress={() => this.props.navigation.goBack()}>
                 Cancel
               </Button>

@@ -1,5 +1,10 @@
 import {action, observable} from 'mobx';
-import api, {getDefaultApiState, getErrorMessage, setErrorApiState, setSuccessApiState} from '../api';
+import api, {
+  getDefaultApiState,
+  getErrorMessage,
+  setErrorApiState,
+  setSuccessApiState
+} from '../api';
 import {IRootStore} from './root';
 import {IChat} from '../interfaces/chat';
 import {IApiState} from '../interfaces/api';
@@ -74,7 +79,10 @@ export class ChatStore {
       })
       .catch((error: any) => {
         if (this.createChatApiState) {
-          this.createChatApiState = setErrorApiState(this.createChatApiState, error);
+          this.createChatApiState = setErrorApiState(
+            this.createChatApiState,
+            error
+          );
         }
       });
   }
@@ -100,7 +108,10 @@ export class ChatStore {
       })
       .catch((error: any) => {
         if (this.viewChatApiState) {
-          this.viewChatApiState = setErrorApiState(this.viewChatApiState, error);
+          this.viewChatApiState = setErrorApiState(
+            this.viewChatApiState,
+            error
+          );
         }
       });
   }
@@ -121,7 +132,10 @@ export class ChatStore {
       })
       .catch((error: any) => {
         if (this.joinChatApiState) {
-          this.joinChatApiState = setErrorApiState(this.joinChatApiState, error);
+          this.joinChatApiState = setErrorApiState(
+            this.joinChatApiState,
+            error
+          );
         }
       });
   }
@@ -144,7 +158,10 @@ export class ChatStore {
       })
       .catch((error: any) => {
         if (this.searchChatApiState) {
-          this.searchChatApiState = setErrorApiState(this.searchChatApiState, error);
+          this.searchChatApiState = setErrorApiState(
+            this.searchChatApiState,
+            error
+          );
         }
       });
   }
