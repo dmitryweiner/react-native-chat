@@ -7,6 +7,7 @@ import {
   IViewChatParams
 } from './interfaces/chat';
 import {IApiState} from './interfaces/api';
+import {ISendMessageParams} from './interfaces/message';
 
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:3000'
@@ -53,9 +54,24 @@ export function getErrorMessage(error: any) {
 export function getDefaultApiState(): IApiState {
   return {
     isLoading: true,
+    isSuccess: false,
     isError: false,
     errorMessage: ''
   };
+}
+
+export function setSuccessApiState(apiState: IApiState) {
+  apiState.isSuccess = true;
+  apiState.isLoading = false;
+  return apiState;
+}
+
+export function setErrorApiState(apiState: IApiState, error: any) {
+  apiState.isSuccess = false;
+  apiState.isLoading = false;
+  apiState.isError = true;
+  apiState.errorMessage = getErrorMessage(error);
+  return apiState;
 }
 
 export default api;

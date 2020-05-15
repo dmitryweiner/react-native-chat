@@ -1,11 +1,30 @@
 import {action, observable} from 'mobx';
-import api, {getDefaultApiState, getErrorMessage} from '../api';
+import api, {getDefaultApiState, getErrorMessage, setErrorApiState, setSuccessApiState} from '../api';
 import {IRootStore} from './root';
 import {IChat} from '../interfaces/chat';
 import {IApiState} from '../interfaces/api';
 
 export interface IChatStore {
   rootStore: IRootStore;
+
+  myChats: Array<IChat>;
+  myChatsApiState: IApiState;
+  loadMyChats: Function;
+
+  currentChat: IChat;
+
+  createChatApiState: IApiState;
+  createChat: Function;
+  resetCreateChatState: Function;
+
+  viewChatApiState: IApiState;
+  viewChat: Function;
+
+  joinChatApiState: IApiState;
+  joinChat: Function;
+
+  searchChatResutls: Array<IChat>;
+  searchChatApiState: IApiState;
 }
 
 export class ChatStore {
@@ -26,15 +45,13 @@ export class ChatStore {
       .then((response) => response.data.chats)
       .then((chats: Array<IChat>) => {
         if (this.myChatsApiState) {
-          this.myChatsApiState.isLoading = false;
+          this.myChatsApiState = setSuccessApiState(this.myChatsApiState);
         }
         this.myChats = chats;
       })
       .catch((error: any) => {
         if (this.myChatsApiState) {
-          this.myChatsApiState.isLoading = false;
-          this.myChatsApiState.isError = true;
-          this.myChatsApiState.errorMessage = getErrorMessage(error);
+          this.myChatsApiState = setErrorApiState(this.myChatsApiState, error);
         }
       });
   }
@@ -51,17 +68,20 @@ export class ChatStore {
       .then((response) => response.data.chat)
       .then((chat: IChat) => {
         if (this.createChatApiState) {
-          this.createChatApiState.isLoading = false;
+          this.createChatApiState = setSuccessApiState(this.createChatApiState);
         }
         this.currentChat = chat;
       })
       .catch((error: any) => {
         if (this.createChatApiState) {
-          this.createChatApiState.isLoading = false;
-          this.createChatApiState.isError = true;
-          this.createChatApiState.errorMessage = getErrorMessage(error);
+          this.createChatApiState = setErrorApiState(this.createChatApiState, error);
         }
       });
+  }
+
+  @action
+  resetCreateChatState() {
+    this.createChatApiState = getDefaultApiState();
   }
 
   @observable
@@ -74,15 +94,13 @@ export class ChatStore {
       .then((response) => response.data.chat)
       .then((chat: IChat) => {
         if (this.viewChatApiState) {
-          this.viewChatApiState.isLoading = false;
+          this.viewChatApiState = setSuccessApiState(this.viewChatApiState);
         }
         this.currentChat = chat;
       })
       .catch((error: any) => {
         if (this.viewChatApiState) {
-          this.viewChatApiState.isLoading = false;
-          this.viewChatApiState.isError = true;
-          this.viewChatApiState.errorMessage = getErrorMessage(error);
+          this.viewChatApiState = setErrorApiState(this.viewChatApiState, error);
         }
       });
   }
@@ -97,15 +115,13 @@ export class ChatStore {
       .then((response) => response.data.chat)
       .then((chat: IChat) => {
         if (this.joinChatApiState) {
-          this.joinChatApiState.isLoading = false;
+          this.joinChatApiState = setSuccessApiState(this.joinChatApiState);
         }
         this.currentChat = chat;
       })
       .catch((error: any) => {
         if (this.joinChatApiState) {
-          this.joinChatApiState.isLoading = false;
-          this.joinChatApiState.isError = true;
-          this.joinChatApiState.errorMessage = getErrorMessage(error);
+          this.joinChatApiState = setErrorApiState(this.joinChatApiState, error);
         }
       });
   }
@@ -122,15 +138,13 @@ export class ChatStore {
       .then((response) => response.data.chats)
       .then((chats: Array<IChat>) => {
         if (this.searchChatApiState) {
-          this.searchChatApiState.isLoading = false;
+          this.searchChatApiState = setSuccessApiState(this.searchChatApiState);
         }
         this.searchChatResutls = chats;
       })
       .catch((error: any) => {
         if (this.searchChatApiState) {
-          this.searchChatApiState.isLoading = false;
-          this.searchChatApiState.isError = true;
-          this.searchChatApiState.errorMessage = getErrorMessage(error);
+          this.searchChatApiState = setErrorApiState(this.searchChatApiState, error);
         }
       });
   }
