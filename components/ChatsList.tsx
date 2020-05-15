@@ -1,19 +1,19 @@
 import {IChat} from '../interfaces/chat';
-import {ScrollView, Text} from 'react-native';
 import React from 'react';
 import ChatItem from './ChatItem';
+import {List} from '@ui-kitten/components';
 
 export interface ChatsListProps {
   chats: Array<IChat>;
 }
 
 const ChatsList: React.FC<ChatsListProps> = (props: ChatsListProps) => {
-  return (
-    <ScrollView>
-      {props.chats &&
-        props.chats.map((chat: IChat) => <ChatItem chat={chat} />)}
-    </ScrollView>
-  );
+  const renderItem = ({item}: {item: IChat}) => <ChatItem chat={item} />;
+
+  if (!props.chats) {
+    return null;
+  }
+  return <List data={props.chats} renderItem={renderItem} />;
 };
 
 export default ChatsList;

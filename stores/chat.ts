@@ -47,7 +47,7 @@ export class ChatStore {
     this.myChatsApiState = getDefaultApiState();
     api
       .getMyChats(this.rootStore.userStore.getAuthParams())
-      .then((response) => response.data.chats)
+      .then((response) => response.data)
       .then((chats: Array<IChat>) => {
         if (this.myChatsApiState) {
           this.myChatsApiState = setSuccessApiState(this.myChatsApiState);
@@ -69,7 +69,7 @@ export class ChatStore {
   createChat(title: string) {
     this.createChatApiState = getDefaultApiState();
     api
-      .createChat({...this.rootStore.userStore.getAuthParams(), title})
+      .createChat({...this.rootStore.userStore.getAuthParams(), chat: {title}})
       .then((response) => response.data.chat)
       .then((chat: IChat) => {
         if (this.createChatApiState) {
@@ -149,7 +149,7 @@ export class ChatStore {
     this.searchChatApiState = getDefaultApiState();
     api
       .searchChats({...this.rootStore.userStore.getAuthParams(), query})
-      .then((response) => response.data.chats)
+      .then((response) => response.data)
       .then((chats: Array<IChat>) => {
         if (this.searchChatApiState) {
           this.searchChatApiState = setSuccessApiState(this.searchChatApiState);

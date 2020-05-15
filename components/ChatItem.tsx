@@ -1,17 +1,20 @@
 import {IChat} from '../interfaces/chat';
-import {View, Text} from 'react-native';
 import React from 'react';
+import {Button, ListItem} from '@ui-kitten/components';
 
 export interface ChatItemProps {
   chat: IChat;
 }
 
 const ChatItem: React.FC<ChatItemProps> = (props: ChatItemProps) => {
+  const renderItemAccessory = () => (
+    <Button size='tiny'>view</Button>
+  );
+
+  console.log(props);
+
   return (
-    <View>
-      {/* Here should be link to chat or something */}
-      <Text>{props.chat.title}</Text>
-    </View>
+    <ListItem title={props.chat.title} accessoryRight={renderItemAccessory} />
   );
 };
 

@@ -19,7 +19,7 @@ import {IUserStore} from '../stores/user';
 import ScreenWithNavigation from '../components/ScreenWithNavigation';
 import ChatsList from '../components/ChatsList';
 import {IChatStore} from '../stores/chat';
-import {when} from 'mobx';
+import {reaction} from 'mobx';
 
 type MyChatsProps = {
   userStore: IUserStore;
@@ -38,17 +38,22 @@ export default class MyChatsScreen extends Component<
   MyChatsProps,
   MyChatsState
 > {
-  constructor(props: MyChatsProps) {
-    super(props);
-
-    this.state = {
-      isModalVisible: false,
-      title: ''
-    };
-  }
+  disposer: Function = () => {};
 
   componentDidMount(): void {
     this.props.chatStore.loadMyChats();
+    this.disposer = reaction(
+      () => this.props.chatStore.createChatApiState?.isSuccess,
+      (isSuccess: boolean) => {
+        if (isSuccess) {
+          this.props.chatStore.loadMyChats();
+        }
+      }
+    );
+  }
+
+  componentWillUnmount(): void {
+    this.disposer();
   }
 
   render() {
