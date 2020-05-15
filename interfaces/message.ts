@@ -9,4 +9,7 @@ export interface IMessage {
 export interface ISendMessageParams extends IAuthParams {
   content: string;
   chatId: string;
+  creationDate: Date;
+  authorId: string;
+  authorNickname: string;
 }

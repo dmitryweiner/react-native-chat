@@ -19,3 +19,8 @@ export interface IUser {
   token: string;
   lastActivity: Date;
 }
+
+export interface IHiddenUser {
+  id: string;
+  nickname: string;
+}

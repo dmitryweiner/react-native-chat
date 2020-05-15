@@ -40,6 +40,7 @@ import MyChatsScreen from './views/MyChatsScreen';
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import {IUserStore} from './stores/user';
 import CreateChatScreen from './views/CreateChatScreen';
+import ChatScreen from './views/ChatScreen';
 
 declare const global: {HermesInternal: null | {}};
 
@@ -147,6 +148,17 @@ class MainContainer extends Component<MainContainerProps> {
                     navigation
                   };
                   return <CreateChatScreen {...props} />;
+                }}
+              </Stack.Screen>
+              <Stack.Screen name="Chat">
+                {({navigation, route}) => {
+                  const props = {
+                    userStore: stores.userStore,
+                    chatStore: stores.chatStore,
+                    navigation,
+                    route
+                  };
+                  return <ChatScreen {...props} />;
                 }}
               </Stack.Screen>
             </Stack.Navigator>

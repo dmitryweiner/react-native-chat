@@ -36,7 +36,7 @@ const api = {
     return axiosInstance.post('/chat/search', params);
   },
   sendMessage(params: ISendMessageParams) {
-    return axiosInstance.post('/chat/search', params);
+    return axiosInstance.post('/message', params);
   }
 };
 

@@ -56,6 +56,10 @@ export default class MyChatsScreen extends Component<
     this.disposer();
   }
 
+  viewHandler = (chatId: string) => {
+    this.props.navigation.navigate('Chat', {chatId});
+  };
+
   render() {
     return (
       <ScreenWithNavigation
@@ -65,7 +69,10 @@ export default class MyChatsScreen extends Component<
           {(this.props.chatStore.myChatsApiState?.isLoading ||
             this.props.chatStore.createChatApiState?.isLoading) && <Spinner />}
           <View style={styles.chatsList}>
-            <ChatsList chats={this.props.chatStore.myChats} />
+            <ChatsList
+              chats={this.props.chatStore.myChats}
+              viewHandler={this.viewHandler}
+            />
           </View>
           <View style={styles.viewWithMargin}>
             <Button

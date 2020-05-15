@@ -8,6 +8,7 @@ import api, {
 import {IRootStore} from './root';
 import {IChat} from '../interfaces/chat';
 import {IApiState} from '../interfaces/api';
+import {IMessage} from '../interfaces/message';
 
 export interface IChatStore {
   rootStore: IRootStore;
@@ -30,6 +31,9 @@ export interface IChatStore {
 
   searchChatResutls: Array<IChat>;
   searchChatApiState: IApiState;
+
+  sendMessageApiState: IApiState;
+  sendMessage: Function;
 }
 
 export class ChatStore {
@@ -162,6 +166,33 @@ export class ChatStore {
             this.searchChatApiState,
             error
           );
+        }
+      });
+  }
+
+  @observable
+  sendMessageApiState: IApiState | undefined;
+  @action
+  sendMessage(content: string, chatId: string) {
+    this.sendMessageApiState = getDefaultApiState();
+    api
+      .sendMessage({
+        ...this.rootStore.userStore.getAuthParams(),
+        message: {
+          content,
+          chatId
+        }
+      })
+      .then((response) => response.data.message)
+      .then((message: IMessage) => {
+        if (this.sendMessageApiState) {
+          this.sendMessageApiState = setSuccessApiState(this.sendMessageApiState);
+        }
+        this.currentChat?.messages.push(message);
+      })
+      .catch((error: any) => {
+        if (this.sendMessageApiState) {
+          this.sendMessageApiState = setErrorApiState(this.sendMessageApiState, error);
         }
       });
   }

@@ -5,10 +5,13 @@ import {List} from '@ui-kitten/components';
 
 export interface ChatsListProps {
   chats: Array<IChat>;
+  viewHandler: Function;
 }
 
 const ChatsList: React.FC<ChatsListProps> = (props: ChatsListProps) => {
-  const renderItem = ({item}: {item: IChat}) => <ChatItem chat={item} />;
+  const renderItem = ({item}: {item: IChat}) => (
+    <ChatItem chat={item} viewHandler={props.viewHandler} />
+  );
 
   if (!props.chats) {
     return null;

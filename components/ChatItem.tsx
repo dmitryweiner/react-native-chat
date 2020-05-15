@@ -4,11 +4,14 @@ import {Button, ListItem} from '@ui-kitten/components';
 
 export interface ChatItemProps {
   chat: IChat;
+  viewHandler: any;
 }
 
 const ChatItem: React.FC<ChatItemProps> = (props: ChatItemProps) => {
   const renderItemAccessory = () => (
-    <Button size='tiny'>view</Button>
+    <Button size="tiny" onPress={() => props.viewHandler(props.chat.id)}>
+      view
+    </Button>
   );
 
   console.log(props);
