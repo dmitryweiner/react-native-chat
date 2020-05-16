@@ -43,7 +43,9 @@ export default class ProfileScreen extends Component<ProfileScreenProps> {
         </View>
         {this.renderUserDetails()}
         <View style={styles.viewWithMargin}>
-          <Button onPress={this.handleLogout.bind(this)}>Logout</Button>
+          <Button status="danger" onPress={this.handleLogout.bind(this)}>
+            Logout
+          </Button>
         </View>
         <View style={styles.viewWithMargin}>
           <Button onPress={this.handleMyChats.bind(this)}>My chats</Button>

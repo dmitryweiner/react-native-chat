@@ -85,18 +85,26 @@ export default class CreateChatScreen extends Component<
                 </Text>
               </View>
             )}
-            <View style={styles.viewWithMargin}>
+            <View style={styles.detailsHolder}>
               <Input
                 placeholder="Enter chat title"
                 value={this.state.title}
                 onChangeText={this.handleTitleChange}
               />
             </View>
-            <View>
-              <Button onPress={this.handleSaveChat}>Save</Button>
-              <Button onPress={() => this.props.navigation.goBack()}>
-                Cancel
-              </Button>
+            <View style={styles.buttonsSectionWrapper}>
+              <View style={styles.buttonWrapper}>
+                <Button
+                  status="warning"
+                  onPress={() => this.props.navigation.goBack()}>
+                  Cancel
+                </Button>
+              </View>
+              <View style={styles.buttonWrapper}>
+                <Button status="success" onPress={this.handleSaveChat}>
+                  Save
+                </Button>
+              </View>
             </View>
           </>
         </ScreenWithNavigation>
@@ -108,5 +116,16 @@ export default class CreateChatScreen extends Component<
 const styles = StyleSheet.create({
   viewWithMargin: {
     margin: 10
+  },
+  detailsHolder: {
+    margin: 10,
+    flex: 1
+  },
+  buttonsSectionWrapper: {
+    flexDirection: 'row'
+  },
+  buttonWrapper: {
+    margin: 10,
+    flex: 1
   }
 });
