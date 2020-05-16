@@ -25,6 +25,10 @@ export default class ChatScreen extends Component<
   ChatScreenProps,
   ChatScreenState
 > {
+  timeoutHandler: any;
+  shouldScroll: boolean = false;
+  scrollToBottomY: number = 0;
+  scrollViewRef: any;
   constructor(props: ChatScreenProps) {
     super(props);
     this.state = {
@@ -33,7 +37,24 @@ export default class ChatScreen extends Component<
   }
 
   componentDidMount(): void {
+    this.updateChat();
+  }
+
+  updateChat() {
     this.props.chatStore.viewChat(this.props.route.params?.chatId);
+    if (this.scrollToBottomY && this.shouldScroll) {
+      this.scrollViewRef.scrollTo({
+        x: 0,
+        y: this.scrollToBottomY,
+        animated: true
+      });
+      this.shouldScroll = false;
+    }
+    this.timeoutHandler = setTimeout(() => this.updateChat(), 1000);
+  }
+
+  componentWillUnmount(): void {
+    clearInterval(this.timeoutHandler);
   }
 
   handleSendMessage = () => {
@@ -49,19 +70,21 @@ export default class ChatScreen extends Component<
   };
 
   render() {
-    const Message = (message: IMessage) => (
-      <View>
-        <Text>{message.content}</Text>
-      </View>
-    );
-
     return (
       <ScreenWithNavigation
         backHandler={() => this.props.navigation.goBack()}
         title="Сhat">
         <>
           <View style={styles.chatArea}>
-            <MessagesList messages={this.props.chatStore.currentMessages} />
+            <ScrollView
+              ref={(ref) => (this.scrollViewRef = ref)}
+              onContentSizeChange={(contentWidth, contentHeight) => {
+                // TODO: move it to handler
+                this.scrollToBottomY = contentHeight;
+                this.shouldScroll = true;
+              }}>
+              <MessagesList messages={this.props.chatStore.currentMessages} />
+            </ScrollView>
           </View>
           <View style={styles.inputForm}>
             <View style={{flex: 1, margin: 10}}>

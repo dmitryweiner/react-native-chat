@@ -16,11 +16,11 @@ const MessagesList: React.FC<MessagesListProps> = (
   }
 
   return (
-    <ScrollView>
+    <>
       {props.messages.map((message) => (
         <Message message={message} key={message.id} />
       ))}
-    </ScrollView>
+    </>
   );
 };
 
