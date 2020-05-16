@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {inject, observer} from 'mobx-react';
 import ScreenWithNavigation from '../components/ScreenWithNavigation';
 import {IUserStore} from '../stores/user';
 import {IChatStore} from '../stores/chat';
 import MessagesList from '../components/MessagesList';
-import {Input, Button} from '@ui-kitten/components';
+import {Input, Button, Text} from '@ui-kitten/components';
+import {IMessage} from '../interfaces/message';
 
 type ChatScreenProps = {
   userStore: IUserStore;
@@ -40,6 +41,7 @@ export default class ChatScreen extends Component<
       this.state.message,
       this.props.route.params?.chatId
     );
+    this.setState({message: ''});
   };
 
   handleChangeInput = (value: any) => {
@@ -47,23 +49,44 @@ export default class ChatScreen extends Component<
   };
 
   render() {
+    const Message = (message: IMessage) => (
+      <View>
+        <Text>{message.content}</Text>
+      </View>
+    );
+
     return (
       <ScreenWithNavigation
         backHandler={() => this.props.navigation.goBack()}
         title="Сhat">
         <>
-          <View>
-            <MessagesList messages={this.props.chatStore.currentChat?.messages} />
+          <View style={styles.chatArea}>
+            <MessagesList messages={this.props.chatStore.currentMessages} />
           </View>
-          <View>
-            <Input
-              value={this.state.message}
-              onChangeText={this.handleChangeInput}
-            />
-            <Button onPress={this.handleSendMessage}>Send</Button>
+          <View style={styles.inputForm}>
+            <View style={{flex: 1, margin: 10}}>
+              <Input
+                value={this.state.message}
+                onChangeText={this.handleChangeInput}
+              />
+            </View>
+            <View style={{flex: 0, margin: 10}}>
+              <Button onPress={this.handleSendMessage}>Send</Button>
+            </View>
           </View>
         </>
       </ScreenWithNavigation>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  chatArea: {
+    flex: 1,
+    margin: 10
+  },
+  inputForm: {
+    flexDirection: 'row',
+    margin: 10
+  }
+});

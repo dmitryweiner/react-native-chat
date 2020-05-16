@@ -51,9 +51,18 @@ export function getErrorMessage(error: any) {
   return errorMessage;
 }
 
-export function getDefaultApiState(): IApiState {
+export function getInitialApiState(): IApiState {
   return {
     isLoading: true,
+    isSuccess: false,
+    isError: false,
+    errorMessage: ''
+  };
+}
+
+export function resetApiState(): IApiState {
+  return {
+    isLoading: false,
     isSuccess: false,
     isError: false,
     errorMessage: ''

@@ -14,8 +14,6 @@ const ChatItem: React.FC<ChatItemProps> = (props: ChatItemProps) => {
     </Button>
   );
 
-  console.log(props);
-
   return (
     <ListItem title={props.chat.title} accessoryRight={renderItemAccessory} />
   );

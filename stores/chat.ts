@@ -1,9 +1,9 @@
-import {action, observable} from 'mobx';
+import {action, computed, observable, runInAction} from 'mobx';
 import api, {
-  getDefaultApiState,
-  getErrorMessage,
+  getInitialApiState,
   setErrorApiState,
-  setSuccessApiState
+  setSuccessApiState,
+  resetApiState
 } from '../api';
 import {IRootStore} from './root';
 import {IChat} from '../interfaces/chat';
@@ -18,6 +18,7 @@ export interface IChatStore {
   loadMyChats: Function;
 
   currentChat: IChat;
+  currentMessages: Array<IMessage>;
 
   createChatApiState: IApiState;
   createChat: Function;
@@ -48,7 +49,7 @@ export class ChatStore {
   myChatsApiState: IApiState | undefined;
   @action
   loadMyChats() {
-    this.myChatsApiState = getDefaultApiState();
+    this.myChatsApiState = getInitialApiState();
     api
       .getMyChats(this.rootStore.userStore.getAuthParams())
       .then((response) => response.data)
@@ -67,11 +68,20 @@ export class ChatStore {
 
   @observable
   currentChat: IChat | undefined;
+
+  @computed
+  get currentMessages(): Array<IMessage> {
+    if (this.currentChat) {
+      return this.currentChat.messages;
+    }
+    return [];
+  }
+
   @observable
   createChatApiState: IApiState | undefined;
   @action
   createChat(title: string) {
-    this.createChatApiState = getDefaultApiState();
+    this.createChatApiState = getInitialApiState();
     api
       .createChat({...this.rootStore.userStore.getAuthParams(), chat: {title}})
       .then((response) => response.data.chat)
@@ -93,14 +103,14 @@ export class ChatStore {
 
   @action
   resetCreateChatState() {
-    this.createChatApiState = getDefaultApiState();
+    this.createChatApiState = resetApiState();
   }
 
   @observable
   viewChatApiState: IApiState | undefined;
   @action
   viewChat(chatId: string) {
-    this.viewChatApiState = getDefaultApiState();
+    this.viewChatApiState = getInitialApiState();
     api
       .viewChat({...this.rootStore.userStore.getAuthParams(), chatId})
       .then((response) => response.data.chat)
@@ -124,7 +134,7 @@ export class ChatStore {
   joinChatApiState: IApiState | undefined;
   @action
   joinChat(chatId: string) {
-    this.viewChatApiState = getDefaultApiState();
+    this.viewChatApiState = getInitialApiState();
     api
       .joinChat({...this.rootStore.userStore.getAuthParams(), chatId})
       .then((response) => response.data.chat)
@@ -150,7 +160,7 @@ export class ChatStore {
   searchChatApiState: IApiState | undefined;
   @action
   searchChats(query: string) {
-    this.searchChatApiState = getDefaultApiState();
+    this.searchChatApiState = getInitialApiState();
     api
       .searchChats({...this.rootStore.userStore.getAuthParams(), query})
       .then((response) => response.data)
@@ -174,7 +184,7 @@ export class ChatStore {
   sendMessageApiState: IApiState | undefined;
   @action
   sendMessage(content: string, chatId: string) {
-    this.sendMessageApiState = getDefaultApiState();
+    this.sendMessageApiState = getInitialApiState();
     api
       .sendMessage({
         ...this.rootStore.userStore.getAuthParams(),
@@ -186,13 +196,24 @@ export class ChatStore {
       .then((response) => response.data.message)
       .then((message: IMessage) => {
         if (this.sendMessageApiState) {
-          this.sendMessageApiState = setSuccessApiState(this.sendMessageApiState);
+          this.sendMessageApiState = setSuccessApiState(
+            this.sendMessageApiState
+          );
         }
-        this.currentChat?.messages.push(message);
+        // DON'T DO THIS
+        // this.currentChat?.messages.push(message);
+        // OR COMPONENT WILL NOT RERENDER
+        // BETTER DO THIS
+        if (this.currentChat) {
+          this.currentChat.messages = [...this.currentChat.messages, message];
+        }
       })
       .catch((error: any) => {
         if (this.sendMessageApiState) {
-          this.sendMessageApiState = setErrorApiState(this.sendMessageApiState, error);
+          this.sendMessageApiState = setErrorApiState(
+            this.sendMessageApiState,
+            error
+          );
         }
       });
   }
