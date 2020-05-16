@@ -1,3 +1,5 @@
+import {IAbstractObject} from './abstract-object';
+
 export interface IUserRegister {
   nickname: string;
   password: string;
@@ -13,8 +15,7 @@ export interface IAuthParams {
   token: string;
 }
 
-export interface IUser {
-  id: string;
+export interface IUser extends IAbstractObject {
   nickname: string;
   token: string;
   lastActivity: Date;

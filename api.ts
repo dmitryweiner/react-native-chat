@@ -32,7 +32,7 @@ const api = {
   joinChat(params: IJoinChatParams) {
     return axiosInstance.put(`/chat/${params.chatId}`, params);
   },
-  searchChats(params: ISearchParams) {
+  searchChat(params: ISearchParams) {
     return axiosInstance.post('/chat/search', params);
   },
   sendMessage(params: ISendMessageParams) {

@@ -30,7 +30,9 @@ export interface IChatStore {
   joinChatApiState: IApiState;
   joinChat: Function;
 
-  searchChatResutls: Array<IChat>;
+  searchChat: Function;
+  resetSearchChat: Function;
+  searchChatResults: Array<IChat>;
   searchChatApiState: IApiState;
 
   sendMessageApiState: IApiState;
@@ -155,20 +157,26 @@ export class ChatStore {
   }
 
   @observable
-  searchChatResutls: Array<IChat> | undefined;
+  searchChatResults: Array<IChat> | undefined;
   @observable
   searchChatApiState: IApiState | undefined;
   @action
-  searchChats(query: string) {
+  resetSearchChat() {
+    this.searchChatResults = [];
+    this.searchChatApiState = resetApiState();
+  }
+  @action
+  searchChat(query: string) {
     this.searchChatApiState = getInitialApiState();
+    this.searchChatResults = [];
     api
-      .searchChats({...this.rootStore.userStore.getAuthParams(), query})
+      .searchChat({...this.rootStore.userStore.getAuthParams(), query})
       .then((response) => response.data)
       .then((chats: Array<IChat>) => {
         if (this.searchChatApiState) {
           this.searchChatApiState = setSuccessApiState(this.searchChatApiState);
         }
-        this.searchChatResutls = chats;
+        this.searchChatResults = chats;
       })
       .catch((error: any) => {
         if (this.searchChatApiState) {

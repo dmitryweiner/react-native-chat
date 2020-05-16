@@ -1,12 +1,11 @@
 import {IAuthParams} from './user';
+import {IAbstractObject} from './abstract-object';
 
-export interface IMessage {
-  id: string;
+export interface IMessage extends IAbstractObject{
   content: string;
   chatId: string;
   authorId: string;
   authorNickname: string;
-  creationDate: Date;
 }
 
 export interface ISendMessageParams extends IAuthParams {

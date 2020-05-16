@@ -17,9 +17,13 @@ export default class ProfileScreen extends Component<ProfileScreenProps> {
     this.props.userStore.logout();
   }
 
-  handleMyChats() {
+  handleMyChats = () => {
     this.props.navigation.navigate('MyChats');
-  }
+  };
+
+  handleSearchChat = () => {
+    this.props.navigation.navigate('SearchChat');
+  };
 
   renderUserDetails() {
     if (!this.props.userStore.user) {
@@ -48,7 +52,10 @@ export default class ProfileScreen extends Component<ProfileScreenProps> {
           </Button>
         </View>
         <View style={styles.viewWithMargin}>
-          <Button onPress={this.handleMyChats.bind(this)}>My chats</Button>
+          <Button onPress={this.handleMyChats}>My chats</Button>
+        </View>
+        <View style={styles.viewWithMargin}>
+          <Button onPress={this.handleSearchChat}>Search chat</Button>
         </View>
       </View>
     );

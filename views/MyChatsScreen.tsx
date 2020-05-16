@@ -28,7 +28,6 @@ type MyChatsProps = {
 };
 
 type MyChatsState = {
-  isModalVisible: boolean;
   title: string;
 };
 
@@ -72,6 +71,7 @@ export default class MyChatsScreen extends Component<
             <ChatsList
               chats={this.props.chatStore.myChats}
               viewHandler={this.viewHandler}
+              user={this.props.userStore.user}
             />
           </View>
           <View style={styles.viewWithMargin}>

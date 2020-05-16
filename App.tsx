@@ -41,6 +41,7 @@ import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import {IUserStore} from './stores/user';
 import CreateChatScreen from './views/CreateChatScreen';
 import ChatScreen from './views/ChatScreen';
+import SearchChatScreen from './views/SearchChatScreen';
 
 declare const global: {HermesInternal: null | {}};
 
@@ -156,9 +157,19 @@ class MainContainer extends Component<MainContainerProps> {
                     userStore: stores.userStore,
                     chatStore: stores.chatStore,
                     navigation,
-                    route
+                    route // NOTE: to get route parameters you should pass route object
                   };
                   return <ChatScreen {...props} />;
+                }}
+              </Stack.Screen>
+              <Stack.Screen name="SearchChat">
+                {({navigation}) => {
+                  const props = {
+                    userStore: stores.userStore,
+                    chatStore: stores.chatStore,
+                    navigation
+                  };
+                  return <SearchChatScreen {...props} />;
                 }}
               </Stack.Screen>
             </Stack.Navigator>

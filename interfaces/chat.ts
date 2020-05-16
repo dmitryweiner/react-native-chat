@@ -1,5 +1,6 @@
 import {IAuthParams, IHiddenUser} from './user';
 import {IMessage} from './message';
+import {IAbstractObject} from './abstract-object';
 
 export interface ISearchParams extends IAuthParams {
   query: string;
@@ -17,10 +18,8 @@ export interface IJoinChatParams extends IAuthParams {
   chatId: string;
 }
 
-export interface IChat {
-  id: string;
+export interface IChat extends IAbstractObject {
   title: string;
-  creationDate: Date;
   messages: Array<IMessage>;
   participants: Array<IHiddenUser>;
 }
