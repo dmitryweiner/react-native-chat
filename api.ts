@@ -10,7 +10,7 @@ import {IApiState} from './interfaces/api';
 import {ISendMessageParams} from './interfaces/message';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3000'
+  baseURL: 'http://rnweb.dweiner.ru:3099'
 });
 
 const api = {
