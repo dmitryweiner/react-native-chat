@@ -20,7 +20,10 @@ const ChatItem: React.FC<ChatItemProps> = (props: ChatItemProps) => {
       );
     } else {
       return (
-        <Button size="tiny" status="success" onPress={() => props.joinHandler(props.chat.id)}>
+        <Button
+          size="tiny"
+          status="success"
+          onPress={() => props.joinHandler(props.chat.id)}>
           join
         </Button>
       );

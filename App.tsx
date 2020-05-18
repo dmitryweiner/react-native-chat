@@ -67,28 +67,24 @@ export function setNavigatorRef(instance: NavigationContainerRef) {
 @observer
 class MainContainer extends Component<MainContainerProps> {
   reactionDisposer: Function = () => {};
-  state = {
-    initialNavigatorState: {
-      index: 0,
-      routes: [{name: 'Login'}]
-    }
-  };
-
   componentDidMount() {
     this.reactionDisposer = reaction(
       () => !!this.props.userStore.user,
       (isLogged: boolean) => {
-        if (isLogged) {
-          instanceRef.reset({
-            index: 0,
-            routes: [{name: 'Profile'}]
-          });
-        } else {
-          instanceRef.reset({
-            index: 0,
-            routes: [{name: 'Login'}]
-          });
-        }
+        // ReactNavigation might be uninitialized this moment
+        setTimeout(() => {
+          if (isLogged) {
+            instanceRef.reset({
+              index: 0,
+              routes: [{name: 'Profile'}]
+            });
+          } else {
+            instanceRef.reset({
+              index: 0,
+              routes: [{name: 'Login'}]
+            });
+          }
+        }, 0);
       }
     );
   }
