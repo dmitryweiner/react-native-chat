@@ -10,20 +10,11 @@
 
 import React, {Component} from 'react';
 import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar
+  StyleSheet
 } from 'react-native';
 
 import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions
+  Colors
 } from 'react-native/Libraries/NewAppScreen';
 import stores from './stores/root';
 import RegisterScreen from './views/RegisterScreen';

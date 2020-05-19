@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "reactnativemobx-tvOS.app"
-               BlueprintName = "reactnativemobx-tvOS"
-               ReferencedContainer = "container:reactnativemobx.xcodeproj">
+               BuildableName = "yetanotherchat-tvOS.app"
+               BlueprintName = "yetanotherchat-tvOS"
+               ReferencedContainer = "container:yetanotherchat.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "reactnativemobx-tvOSTests.xctest"
-               BlueprintName = "reactnativemobx-tvOSTests"
-               ReferencedContainer = "container:reactnativemobx.xcodeproj">
+               BuildableName = "yetanotherchat-tvOSTests.xctest"
+               BlueprintName = "yetanotherchat-tvOSTests"
+               ReferencedContainer = "container:yetanotherchat.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "reactnativemobx-tvOS.app"
-            BlueprintName = "reactnativemobx-tvOS"
-            ReferencedContainer = "container:reactnativemobx.xcodeproj">
+            BuildableName = "yetanotherchat-tvOS.app"
+            BlueprintName = "yetanotherchat-tvOS"
+            ReferencedContainer = "container:yetanotherchat.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "reactnativemobx-tvOS.app"
-            BlueprintName = "reactnativemobx-tvOS"
-            ReferencedContainer = "container:reactnativemobx.xcodeproj">
+            BuildableName = "yetanotherchat-tvOS.app"
+            BlueprintName = "yetanotherchat-tvOS"
+            ReferencedContainer = "container:yetanotherchat.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
