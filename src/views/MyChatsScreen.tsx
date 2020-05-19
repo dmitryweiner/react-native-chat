@@ -1,20 +1,7 @@
 import {inject, observer} from 'mobx-react';
 import React, {Component} from 'react';
-import {View, StyleSheet, ScrollView, TextInputComponent} from 'react-native';
-import {
-  Text,
-  Icon,
-  Layout,
-  MenuItem,
-  OverflowMenu,
-  TopNavigation,
-  TopNavigationAction,
-  Button,
-  Card,
-  Modal,
-  Input,
-  Spinner
-} from '@ui-kitten/components';
+import {View, StyleSheet} from 'react-native';
+import {Button, Spinner} from '@ui-kitten/components';
 import {IUserStore} from '../stores/user';
 import ScreenWithNavigation from '../components/ScreenWithNavigation';
 import ChatsList from '../components/ChatsList';

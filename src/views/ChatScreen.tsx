@@ -5,8 +5,7 @@ import ScreenWithNavigation from '../components/ScreenWithNavigation';
 import {IUserStore} from '../stores/user';
 import {IChatStore} from '../stores/chat';
 import MessagesList from '../components/MessagesList';
-import {Input, Button, Text} from '@ui-kitten/components';
-import {IMessage} from '../interfaces/message';
+import {Input, Button} from '@ui-kitten/components';
 
 type ChatScreenProps = {
   userStore: IUserStore;
@@ -87,13 +86,13 @@ export default class ChatScreen extends Component<
             </ScrollView>
           </View>
           <View style={styles.inputForm}>
-            <View style={{flex: 1, margin: 10}}>
+            <View style={styles.inputFormField}>
               <Input
                 value={this.state.message}
                 onChangeText={this.handleChangeInput}
               />
             </View>
-            <View style={{flex: 0, margin: 10}}>
+            <View style={styles.inputFormButton}>
               <Button onPress={this.handleSendMessage}>Send</Button>
             </View>
           </View>
@@ -110,6 +109,14 @@ const styles = StyleSheet.create({
   },
   inputForm: {
     flexDirection: 'row',
+    margin: 10
+  },
+  inputFormField: {
+    flex: 1,
+    margin: 10
+  },
+  inputFormButton: {
+    flex: 0,
     margin: 10
   }
 });

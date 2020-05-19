@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {View, StyleSheet, GestureResponderEvent} from 'react-native';
+import React from 'react';
+import {StyleSheet} from 'react-native';
 import {
   Icon,
   Layout,
@@ -8,7 +8,6 @@ import {
   TopNavigation,
   TopNavigationAction
 } from '@ui-kitten/components';
-import {NavigationActions} from 'react-navigation';
 
 type ScreenWithNavigationProps = {
   children: JSX.Element;

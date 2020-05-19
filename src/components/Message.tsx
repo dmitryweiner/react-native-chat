@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Text} from '@ui-kitten/components';
 import {IMessage} from '../interfaces/message';
 import React from 'react';

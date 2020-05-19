@@ -71,13 +71,13 @@ export default class SearchChatScreen extends Component<
         title="Find chats">
         <>
           <View style={styles.inputForm}>
-            <View style={{flex: 1, margin: 10}}>
+            <View style={styles.inputFormField}>
               <Input
                 value={this.state.query}
                 onChangeText={this.handleChangeInput}
               />
             </View>
-            <View style={{flex: 0, margin: 10}}>
+            <View style={styles.inputFormButton}>
               <Button onPress={this.handleSearch}>Search</Button>
             </View>
           </View>
@@ -106,6 +106,14 @@ const styles = StyleSheet.create({
     margin: 10
   },
   viewWithMargin: {
+    margin: 10
+  },
+  inputFormField: {
+    flex: 1,
+    margin: 10
+  },
+  inputFormButton: {
+    flex: 0,
     margin: 10
   }
 });
